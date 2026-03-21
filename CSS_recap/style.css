@@ -1,0 +1,35 @@
+body {
+  background-color: beige;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: larger;
+}
+
+a {
+  color: darkgreen;
+  text-decoration: none;
+}
+
+a:hover {
+  color: orange;
+}
+
+img {
+  border: 2px solid brown;
+  border-radius: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table tr:nth-child(even) {
+  background-color: bisque;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
