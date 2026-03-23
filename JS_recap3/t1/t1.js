@@ -30,10 +30,14 @@ const todoList = [
 ];
 
 // add your code here
+
+// Choose the element with id=target (list)
 let list = document.querySelector('#target');
 
+//Create an empty string
 let targetList = '';
 
+// Add list items to the string
 for (const element of todoList) {
   targetList += `
     <li>
@@ -42,4 +46,5 @@ for (const element of todoList) {
     </li>`;
 }
 
+// Insert the list to the html document
 list.insertAdjacentHTML('afterbegin', targetList);
