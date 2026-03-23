@@ -771,3 +771,68 @@ const restaurants = [
 ];
 
 // your code here
+// Add map to the html with center in Helsinki
+var map = L.map('map').setView([60.22, 24.9], 11);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution:
+    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+}).addTo(map);
+
+// Add markers to the map
+for (let restaurant of restaurants) {
+  const marker = L.marker([
+    restaurant.location.coordinates[1],
+    restaurant.location.coordinates[0],
+  ]).addTo(map);
+
+  // Add event handler to the markers
+  marker.on('click', function () {
+    document.querySelector('#name').innerHTML = restaurant.name;
+    document.querySelector('#address').innerHTML =
+      restaurant.address + ', ' + restaurant.city;
+  });
+}
+
+/*
+// It was the first version of the code, even harder
+// Here  search the nearest restaurant to the clicked point
+
+// Count distance between 2 points
+function countDistance(uLon, uLat, rLon, rLat) {
+  return Math.sqrt((rLon - uLon) ** 2 + (rLat - uLat) ** 2);
+}
+
+// Search the nearest restaurant from the list
+function searchNearestRestaurant(lon, lat) {
+  let nearestRestaurant = null;
+  let bestDistance = Infinity;
+
+  for (restaurant of restaurants) {
+    distance = countDistance(
+      lon,
+      lat,
+      restaurant.location.coordinates[0],
+      restaurant.location.coordinates[1]
+    );
+
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      nearestRestaurant = restaurant;
+    }
+  }
+  return nearestRestaurant;
+}
+
+// Event handler - when user clicks the map
+function onMapClick(e) {
+  const restaurant = searchNearestRestaurant(e.latlng.lng, e.latlng.lat);
+  document.querySelector('#name').innerHTML = restaurant.name;
+  document.querySelector('#address').innerHTML =
+    restaurant.address + ', ' + restaurant.city;
+}
+
+// Call the event handler
+map.on('click', onMapClick);
+*/
