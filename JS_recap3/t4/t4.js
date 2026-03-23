@@ -771,3 +771,42 @@ const restaurants = [
 ];
 
 // your code here
+// Find element with id=target
+let restaurantList = document.querySelector('#target');
+
+// Receive users coordinates
+navigator.geolocation.getCurrentPosition(function (position) {
+  // Find users coordinates
+  const userLon = position.coords.longitude;
+  const userLat = position.coords.latitude;
+
+  // Count and save the distance between restaurant and user
+  for (restaurant of restaurants) {
+    restaurant.distance = countDistance(
+      userLon,
+      userLat,
+      restaurant.location.coordinates[0],
+      restaurant.location.coordinates[1]
+    );
+  }
+
+  // Sort restaurants, the nearest is the first
+  restaurants.sort((a, b) => a.distance - b.distance);
+
+  // Create tables elements and output restaurants names and addresses
+  for (restaurant of restaurants) {
+    let tr = document.createElement('tr');
+    let tdName = document.createElement('td');
+    tdName.textContent = restaurant.name;
+    let tdAddress = document.createElement('td');
+    tdAddress.textContent = restaurant.address + ', ' + restaurant.city;
+    tr.appendChild(tdName);
+    tr.appendChild(tdAddress);
+    restaurantList.appendChild(tr);
+  }
+});
+
+// Function to count the distance between 2 objects
+function countDistance(uLon, uLat, rLon, rLat) {
+  return Math.sqrt((rLon - uLon) ** 2 + (rLat - uLat) ** 2);
+}
