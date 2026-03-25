@@ -771,3 +771,75 @@ const restaurants = [
 ];
 
 // your code here
+// Sort restaurants by names
+restaurants.sort((a, b) => a.name.localeCompare(b.name));
+
+// Add restaurants names and addresses to html
+const restaurantsList = document.querySelector('#targetList');
+
+for (const restaurant of restaurants) {
+  const tr = document.createElement('tr');
+
+  const tdName = document.createElement('td');
+  tdName.textContent = restaurant.name;
+
+  const tdAddress = document.createElement('td');
+  tdAddress.textContent = restaurant.address + ', ' + restaurant.city;
+
+  tr.appendChild(tdName);
+  tr.appendChild(tdAddress);
+
+  // Add event handler for clicking on the restaurants name and address
+  tr.addEventListener('click', () => {
+    // Add highlighting for the chosen restaurant
+    document.querySelectorAll('#targetList tr').forEach((row) => {
+      row.classList.remove('highlight');
+    });
+    tr.classList.add('highlight');
+
+    // Find dialog part for the opening of the modal window
+    const dialog = document.querySelector('dialog');
+
+    // Add restaurant name to the modal window
+    dialog.innerHTML = '';
+    const h3 = document.createElement('h3');
+    h3.textContent = restaurant.name;
+    dialog.appendChild(h3);
+
+    // Add address, postal code and city
+    const pAddress = document.createElement('p');
+    pAddress.textContent =
+      restaurant.address +
+      ', ' +
+      restaurant.postalCode +
+      ', ' +
+      restaurant.city;
+    dialog.appendChild(pAddress);
+
+    // Add phone number
+    const pPhone = document.createElement('p');
+    pPhone.textContent = 'phone: ' + restaurant.phone;
+    dialog.appendChild(pPhone);
+
+    // Add company
+    const pCompany = document.createElement('p');
+    pCompany.textContent = 'company: ' + restaurant.company;
+    dialog.appendChild(pCompany);
+
+    // Add close button
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'X';
+    closeBtn.classList.add('close-btn');
+
+    // Add event handler to close the modal window
+    closeBtn.addEventListener('click', () => {
+      dialog.close();
+    });
+    dialog.appendChild(closeBtn);
+
+    // Show modal window
+    dialog.showModal();
+  });
+
+  restaurantsList.appendChild(tr);
+}
